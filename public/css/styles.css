@@ -77,6 +77,10 @@ footer * {
 
 
 /*MAIN DESING*/
+#id_delorean  h2, h3 {
+  text-align: left;
+}
+
 main li{
   text-align: left;
   margin-left: 2rem;
@@ -87,17 +91,12 @@ main li{
 
 .class_delorean {
   display: grid;
-  grid-template-columns: 40% 60%;
-}
-
-.class_delorean > h2 {
-  grid-area: 1/1/2/3;
-  z-index: 1;
-  text-align: left;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
 }
 
 .class_delorean > picture {
-  grid-area: 1/1/3/3;
+  grid-area: 1/1/2/3;
   margin-top: 2rem;
 }
 
@@ -107,14 +106,14 @@ main li{
 }
 
 .class_delorean article {
-  grid-area: 2/1/3/2;
+  grid-area: 1/1/3/2;
   background-color: rgb(255, 255, 255, 0.7);
 }
 
 .class_delorean article h3 {
   font-style: inherit;
   color: var(--third_color);
-  font-weight: 1200;
+  font-weight: 1000;
   text-align: left;
 }
 
@@ -147,4 +146,49 @@ main li{
   text-decoration: underline;
   color: darkblue;
   font-weight: 500;
+}
+
+/*Large Views*/
+@media screen and (min-width: 820px) {
+
+  body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #background {
+    display: block;
+    grid-area: 1/1/3/3;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #wrapper {
+    grid-area: 1/1/3/3;
+    margin: 1.5rem;
+    z-index: 2;
+    background-color: var(--primary_color);
+    border: 5px solid var(--third_color);
+    border-radius: 15px;
+  }
+
+  #reviews-upgrades {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .class_reviews {
+    grid-area: 1/2/2/3;
+  }
+
+  .class_upgrades {
+    grid-area: 1/1/2/2;
+  }
+
+  .class_delorean article {
+    margin-right: 100px;
+  }
 }
