@@ -1,3 +1,11 @@
+/*Task 1 
+ERICK ORELLANA
+BYU Idaho CSE 340 Web Backend Development
+
+Database SOURCE
+*/
+
+
 CREATE TYPE public.account_type AS ENUM
     ('Client', 'Employee', 'Admin');
 
@@ -228,3 +236,14 @@ VALUES   (
     'White',
     5
   );
+
+
+--QUERY 4
+UPDATE public.inventory
+SET inv_description = REPLACE(inv_description, 'small interiors', 'a huge interior')
+WHERE inv_id = 10
+
+--QUERY 6
+UPDATE public.inventory
+SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
+	inv_thumbnail = REPLACE(inv_image, '/images/', '/images/vehicles/')
