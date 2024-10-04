@@ -5,12 +5,15 @@
 /* ***********************
  * Require Statements
  *************************/
-const express = require("express")
-const expressLayouts = require("express-ejs-layouts")
-const env = require("dotenv").config()
-const app = express()
-const static = require("./routes/static")
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const env = require("dotenv").config();
+const app = express();
+const static = require("./routes/static");
+//adding the controller
+const baseController = require("./controllers/baseController");
 
+//the option to charge the layouts.
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
@@ -19,9 +22,15 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes
  *************************/
 // Index route
-app.get("/", function(req, res){
-  res.render("index", {title: "Home"})
-})
+// app.get("/", function(req, res){
+//   res.render("index", {title: "Home"})
+// })
+
+// Inventory routes
+app.use("/inv", inventoryRoute)
+
+
+app.get("/", baseController.buildHome)
 
 app.use(static)
 

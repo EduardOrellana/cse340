@@ -68,6 +68,10 @@ nav > ul > li {
   color: var(--primary_color);
 }
 
+nav > ul > li > a {
+  color: var(--primary_color);
+}
+
 /*Footer*/
 footer * {
   color: black;
