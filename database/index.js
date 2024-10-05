@@ -1,5 +1,5 @@
-const { Pool } = require("pg");
-require("dotenv").config();
+const { Pool } = require("pg"); //Pool collecction from the pg package.
+require("dotenv").config(); //import dotenv
 /* ***************
  * Connection Pool
  * SSL Object needed for local testing of app
@@ -8,16 +8,16 @@ require("dotenv").config();
  * *************** */
 let pool;
 if (process.env.NODE_ENV == "development") {
-    pool = new Pool({
+    pool = new Pool({ //new Pool instance
         connectionString: process.env.DATABASE_URL,
         ssl: {
-            rejectUnauthorized: false, //because we are working in a remote production.
+            rejectUnauthorized: false,
         },
     });
 
     // Added for troubleshooting queries
     // during development
-    module.exports = {
+    module.exports = {//Exporting this function.
         async query(text, params) {
             try {
                 const res = await pool.query(text, params);

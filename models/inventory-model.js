@@ -1,5 +1,5 @@
 const pool = require("../database/") //when we have just one index level doesn't care if we write it or not.
-
+//exporting from the database folder the query when we are going to retrieve the data.
 /* ***************************
  *  Get all classification data
  * ************************** */
@@ -24,6 +24,23 @@ async function getInventoryByClassificationId(classification_id) {
     console.error("getclassificationsbyid error " + error)
   }
 }
+/* ***************************
+ *  Get all inventory items and classification_name by classification_id
+ * ************************** */
+async function getInventoryByClassificationId(classification_id) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.inventory AS i 
+      JOIN public.classification AS c 
+      ON i.classification_id = c.classification_id 
+      WHERE i.classification_id = $1`,
+      [classification_id]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getclassificationsbyid error " + error)
+  }
+}
 
 
-module.exports = {getClassifications}
+module.exports = {getClassifications, getInventoryByClassificationId} //exporting the async function getClassifications.

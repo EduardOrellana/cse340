@@ -4,9 +4,9 @@ const Util = {}
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
+//getNav is not from Expres is a custom Method.
 Util.getNav = async function (req, res, next) {
     let data = await invModel.getClassifications()
-    console.log(data)
     let list = "<ul>"
     list += '<li><a href="/" title="Home page">Home</a></li>'
     data.rows.forEach((row) => {
