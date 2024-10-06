@@ -17,6 +17,22 @@ invCont.buildByClassificationId = async function (req, res, next) {
         nav,
         grid,
     })
+};
+
+invCont.informationCarId = async function (req, res, next){
+    const carId = req.params.car_Id
+    const data = await invModel.getCarrById(carId)
+    const info_car = await utilities.buildCarInformation(data)
+    let nav = await utilities.getNav();
+    const car_name = 'Vehicle: ' + data[0].inv_make;
+    //debugin
+    console.log(`Car_name: ${car_name}`)
+    
+    res.render("./inventory/inv-info", {
+        title: car_name ,
+        nav,
+        info_car,
+    })
 }
 
 

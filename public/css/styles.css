@@ -156,6 +156,7 @@ main li{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
+  list-style: none;
 }
 
 #inv-display > *{
@@ -165,6 +166,61 @@ main li{
 #inv-display img {
   width: 80%;
 }
+
+
+
+/************************************************************************
+Classifications Section.
+*/
+
+@keyframes action {
+  from {
+    left: 100%;
+  }
+
+  to {
+    left: -100%;
+  }
+}
+
+h1 {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 150%;
+  color: var(--second_color);
+  position: relative;
+  animation: action 7s linear infinite;
+}
+
+#car-information {
+  display: flex;
+  flex-direction: column-reverse;
+  border: 2px solid var(--third_color);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 0;
+}
+
+#car-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 0 0 15px var(--second_color);
+  margin: 1rem 0;
+}
+
+#info * {
+  text-align: left;
+  font-weight: 300;
+}
+
+#info h3, #info h4 {
+  font-size: 150%;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--second_color);
+}
+
 /*Large Views*/
 @media screen and (min-width: 820px) {
 
@@ -207,6 +263,29 @@ main li{
 
   .class_delorean article {
     margin-right: 100px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 150%;
+    color: var(--second_color);
+    position: relative;
+    animation: action 15s linear infinite;
+  }
+
+  #car-image img {
+    margin: inherit;
+  }
+
+  #car-information {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    border: 2px solid var(--third_color);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 0;
   }
   
 }
