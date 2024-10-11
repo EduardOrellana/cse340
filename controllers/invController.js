@@ -20,19 +20,36 @@ invCont.buildByClassificationId = async function (req, res, next) {
 };
 
 invCont.informationCarId = async function (req, res, next){
-    const carId = req.params.car_Id
-    const data = await invModel.getCarrById(carId)
-    const info_car = await utilities.buildCarInformation(data)
-    let nav = await utilities.getNav();
-    const car_name = 'Vehicle: ' + data[0].inv_make;
-    //debugin
-    console.log(`Car_name: ${car_name}`)
-    
-    res.render("./inventory/inv-info", {
-        title: car_name ,
-        nav,
-        info_car,
-    })
+    try {
+        const carId = req.params.car_Id
+        const data = await invModel.getCarrById(carId)
+
+        if (!data || data === 0) {
+            return next({
+                status: 404,
+                message: `Car with the Id ${carId} doesn't exists.`
+            })   
+        }
+
+        const info_car = await utilities.buildCarInformation(data)
+        let nav = await utilities.getNav();
+        const car_name = 'Vehicle: ' + data[0].inv_make;
+        //debugin
+        console.log(`Car_name: ${car_name}`)
+        
+        res.render("./inventory/inv-info", {
+            title: car_name ,
+            nav,
+            info_car,
+        })
+    }catch(error) {
+        console.error("Error with the Id" + carId, error)
+        next({
+            status: 500,
+            message: "Something happend accross the server."
+        })
+    }
+
 }
 
 

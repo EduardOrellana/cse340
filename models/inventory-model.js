@@ -44,7 +44,8 @@ async function getCarrById(carId) {
       JOIN public.classification T2
         ON T1.classification_id = T2.classification_id
       WHERE T1.inv_id = $1`, [carId]
-    )
+    );
+
     console.log("information: " + data.rows)
     return data.rows
   } catch (error) {

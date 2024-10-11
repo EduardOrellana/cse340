@@ -29,7 +29,7 @@ Util.getNav = async function (req, res, next) {
 * Build the classification view HTML
 * ************************************ */
 Util.buildClassificationGrid = async function (data) {
-    let grid
+    let grid = '';
     if (data.length > 0) {
         grid = '<ul id="inv-display">'
         data.forEach(vehicle => {
@@ -90,8 +90,8 @@ Util.buildCarInformation = async function(data){
         style: "decimal"
     }).format(element.inv_miles);
 
-    let structure;
-    let image
+    let structure = '';
+    //let image;
 
     if (!data || data.length === 0) {
         return '<p>No image available</p>';
@@ -128,5 +128,14 @@ Util.buildCarInformation = async function(data){
     
     return structure
 }
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => 
+    Promise.resolve(fn(req, res, next))
+    .catch(next)
 
 module.exports = Util
