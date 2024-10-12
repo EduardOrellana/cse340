@@ -167,8 +167,6 @@ main li{
   width: 80%;
 }
 
-
-
 /************************************************************************
 Classifications Section.
 */
@@ -189,8 +187,9 @@ h1 {
   font-size: 150%;
   color: var(--second_color);
   position: relative;
-  animation: action 7s linear infinite;
+  /* animation: action 7s linear 16s; */
 }
+
 
 #car-information {
   display: flex;
@@ -221,6 +220,35 @@ h1 {
   color: var(--second_color);
 }
 
+/*Form Style*/
+.login {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2rem;
+  border: solid  3px var(--second_color);
+  border-radius: 15px;
+  background-color: rgb(1, 176, 211, 0.50);
+}
+
+.login * {
+  margin: 0 auto;
+}
+
+input {
+  width: 80%;
+}
+
+#button-submit {
+  width: 20%;
+  padding: .5rem 2rem;
+}
+
+#button-submit:hover {
+  cursor: pointer;
+}
 /*Large Views*/
 @media screen and (min-width: 820px) {
 
@@ -271,7 +299,7 @@ h1 {
     font-size: 150%;
     color: var(--second_color);
     position: relative;
-    animation: action 15s linear infinite;
+    /* animation: action 15s linear 16s; */
   }
 
   #car-image img {

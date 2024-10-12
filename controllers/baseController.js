@@ -4,6 +4,7 @@ const baseController = {} //declaring the array of the data.
 baseController.buildHome = async function (req, res) {
     try {
         const nav = await utilities.getNav() //building the navigation bar
+        //req.flash("notice", "This is a flash message.")
         res.render("index", { title: "Home", nav }) //rendering the index.html
     }catch(error) {
         next(error)
