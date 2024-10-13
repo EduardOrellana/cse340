@@ -166,7 +166,6 @@ main li{
 #inv-display img {
   width: 80%;
 }
-
 /************************************************************************
 Classifications Section.
 */
@@ -221,7 +220,7 @@ h1 {
 }
 
 /*Form Style*/
-.login {
+.login, .register {
   width: 50%;
   margin: 0 auto;
   display: flex;
@@ -233,7 +232,7 @@ h1 {
   background-color: rgb(1, 176, 211, 0.50);
 }
 
-.login * {
+.login *, .register * {
   margin: 0 auto;
 }
 
@@ -242,13 +241,30 @@ input {
 }
 
 #button-submit {
-  width: 20%;
+  width: 50%;
   padding: .5rem 2rem;
 }
 
 #button-submit:hover {
   cursor: pointer;
 }
+
+.require::before {
+  content: "✴️";
+}
+
+input:required:invalid, input:focus:invalid {
+  background-image: url(/images/site/invalid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+input:required:valid {
+  background-image: url(/images/site/valid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+
+
 /*Large Views*/
 @media screen and (min-width: 820px) {
 

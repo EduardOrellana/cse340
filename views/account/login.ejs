@@ -4,11 +4,11 @@
     res.redirect('/')
 } %>
 
-<!-- <%- messages() %> -->
+<%- messages() %>
 
 <div id="login-form">
 
-    <form method="post" class="login">
+    <form method="post" class="login" action="/account/login">
             <label for="account_email">Email</label>
             <input 
                 type="email" 
@@ -26,11 +26,13 @@
                 id="account_password"
                 required
                 title="account_password">
+            <button id="show-password">Show Password</button>
             <input
                 type="submit"
                 id="button-submit"
                 name="submit"
                 value="Log In">
     </form>
-    <p>No account? <a id="sign-up" href="/register">Sign Up</a></p>
 </div>
+<p>No account? <a id="sign-up" href="/account/register">Sign Up</a></p>
+<script src="js/script.js"></script>
