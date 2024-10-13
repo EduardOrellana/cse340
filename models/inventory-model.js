@@ -53,4 +53,24 @@ async function getCarrById(carId) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getCarrById} //exporting the async function getClassifications.
+async function registerClassification(classification_name) {
+  try {
+    const sql = `INSERT INTO public.classification (classification_name)
+                  VALUE ($1) RETURNING *`
+    return await pool.query(sql, [classification_name])
+  } catch(error){
+    return error.message
+  }
+}
+
+async function checkClassification(classification_name) {
+  try {
+    const sql = "SELECT * FROM public.classification WHERE classification_name = $1"
+    const classification = await pool.query(sql, [classification_name])
+    return classification.rowCount
+  } catch (error) {
+    return error.message
+  }
+}
+
+module.exports = {getClassifications, getInventoryByClassificationId, getCarrById, registerClassification} //exporting the async function getClassifications.

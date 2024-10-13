@@ -1,0 +1,10 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<div id="management-inv">
+    <a href="/inv/addingClassification">Add New Classification</a>
+    <a href="/inv/addingCar">Add New Car</a>
+</div>

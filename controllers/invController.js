@@ -53,4 +53,62 @@ invCont.informationCarId = async function (req, res, next){
 }
 
 
+invCont.manage = async function(req, res, next) {
+    try {
+        let nav = await utilities.getNav();
+        res.render("./inventory/manage", {
+            title: "Management",
+            nav
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+invCont.buildAddClassification = async function(req, res, next) {
+    try {
+        let nav = await utilities.getNav();
+        res.render("./inventory/addClassification", {
+            title: "Adding a New Classication",
+            nav,
+            errors: null
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+invCont.form_management = async (req, res, next) => {
+    try {
+        let nav = await utilities.getNav();
+        
+        const {classification_name} = req.body;
+
+        const regResult = await invModel.registerClassification(
+            classification_name
+        )
+
+        if (regResult) {
+            req.flash(
+                "notice",
+                `The classification ${classification_name}, was register succesfully.`
+            )
+
+            res.status(201).render(this.manage)
+        } else {
+
+            req.flash("notice", "Sorry the process failed")
+            req.status(501).render("./inventory/addClassification",
+
+            )
+
+        }
+
+        res.render("./inventory/addClassification", this.buildAddClassification)
+        
+    } catch(error) {
+        next(error)
+    }
+}
+
 module.exports = invCont

@@ -11,7 +11,7 @@ router.get("/register", utility.handleErrors(accountController.buildRegister))
 
 router.post("/register",
     regValidate.registationRules(),
-    regValidate.checkRegData,    
+    regValidate.checkRegData,   
     utility.handleErrors(accountController.registerAccount))
 
 router.post("/login",

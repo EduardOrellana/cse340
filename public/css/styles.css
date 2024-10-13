@@ -264,6 +264,25 @@ input:required:valid {
   background-repeat: no-repeat;
 }
 
+/*Management Section*/
+#management-inv {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#management-inv * {
+  text-align: left;
+  padding: 1rem;
+  background-color: var(--second_color);
+  color: var(--primary_color);
+  border-radius: 15px;
+  margin: 0 auto;
+}
+
+#management-inv a:hover {
+  background-color: var(--third_color);
+}
 
 /*Large Views*/
 @media screen and (min-width: 820px) {
