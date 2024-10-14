@@ -56,7 +56,7 @@ async function getCarrById(carId) {
 async function registerClassification(classification_name) {
   try {
     const sql = `INSERT INTO public.classification (classification_name)
-                  VALUE ($1) RETURNING *`
+                  VALUES ($1) RETURNING *`
     return await pool.query(sql, [classification_name])
   } catch(error){
     return error.message

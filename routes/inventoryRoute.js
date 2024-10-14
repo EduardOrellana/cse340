@@ -3,7 +3,7 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const utility = require("../utilities/index")
-const carValidation = require("../controllers/invController")
+const carValidation = require("../utilities/car-validation")
 
 /* **********************
  * Route Definitions
@@ -20,10 +20,10 @@ router.get("/type/:classificationId", utility.handleErrors(invController.buildBy
 router.get("/detail/:car_Id", utility.handleErrors(invController.informationCarId))
 
 // Route to display the form to add a new car
-router.get("/addingCar", utility.handleErrors(invController.showAddCarForm)) // <- Asigna un controlador aquí
+router.get("/addingCar", utility.handleErrors(invController.showAddCarForm))
 
 // Route to display the form to add a new classification
-router.get("/addingClassification", utility.handleErrors(invController.form_management)) // <- Asigna un controlador aquí
+router.get("/addingClassification", utility.handleErrors(invController.buildAddClassification))
 
 // Route to add a new Classification Car
 router.post("/addingClassification",

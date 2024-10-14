@@ -23,7 +23,7 @@ validate.registrationRules = () => {
 validate.checkClassfication = async (req, res, next) => {
     const {classification_name} = req.body
     let errors = []
-    erros = validationResult(req)
+    errors = validationResult(req)
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
         res.render("inv/addingClassification", {
@@ -32,6 +32,9 @@ validate.checkClassfication = async (req, res, next) => {
             nav,
             classification_name
         })
+        return
     }
     next()  
 }
+
+module.exports = validate

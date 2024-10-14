@@ -94,7 +94,12 @@ invCont.form_management = async (req, res, next) => {
                 `The classification ${classification_name}, was register succesfully.`
             )
 
-            res.status(201).render(this.manage)
+            res.status(201).render(
+                "./inventory/manage", {
+                title: "Management",
+                nav
+                }
+            )
         } else {
 
             req.flash("notice", "Sorry the process failed")
@@ -104,8 +109,8 @@ invCont.form_management = async (req, res, next) => {
 
         }
 
-        res.render("./inventory/addClassification", this.buildAddClassification)
-        
+        // res.render("./inventory/addClassification", this.buildAddClassification)
+
     } catch(error) {
         next(error)
     }
