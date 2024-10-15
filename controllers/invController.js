@@ -58,7 +58,8 @@ invCont.manage = async function(req, res, next) {
         let nav = await utilities.getNav();
         res.render("./inventory/manage", {
             title: "Management",
-            nav
+            nav,
+            errors: null
         })
     } catch (error) {
         next(error)
@@ -68,7 +69,7 @@ invCont.manage = async function(req, res, next) {
 invCont.buildAddClassification = async function(req, res, next) {
     try {
         let nav = await utilities.getNav();
-        res.render("./inventory/addClassification", {
+        res.render("inventory/addClassification", {
             title: "Adding a New Classication",
             nav,
             errors: null
@@ -78,39 +79,86 @@ invCont.buildAddClassification = async function(req, res, next) {
     }
 }
 
-invCont.form_management = async (req, res, next) => {
+invCont.buildAddCar = async (req, res, next) => {
+    try {
+        let nav = await utilities.getNav();
+        let options = await utilities.getClassificationNames();
+        res.render("inventory/addCar", {
+            title: "Adding A New Car",
+            nav,
+            options,
+            errors: null
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+invCont.addNewClassification = async (req, res, next) => {
     try {
         let nav = await utilities.getNav();
         
         const {classification_name} = req.body;
 
-        const regResult = await invModel.registerClassification(
-            classification_name
-        )
+        const Result = await invModel.registerClassification(classification_name)
 
-        if (regResult) {
+        if (Result) {
             req.flash(
                 "notice",
                 `The classification ${classification_name}, was register succesfully.`
             )
 
             res.status(201).render(
-                "./inventory/manage", {
-                title: "Management",
-                nav
+                "inventory/manage", {
+                title: "Manage System",
+                nav,
+
                 }
             )
         } else {
 
             req.flash("notice", "Sorry the process failed")
-            req.status(501).render("./inventory/addClassification",
+            req.status(501).render("inventory/addClassification", {
+                title: "Adding Classification",
+                nav,
+            }
 
             )
 
         }
 
-        // res.render("./inventory/addClassification", this.buildAddClassification)
+    } catch(error) {
+        next(error)
+    }
+}
 
+invCont.addNewCar = async (req, res, next) => {
+    try {
+        let nav = await utilities.getNav();
+        const {inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id} = req.body
+        const Result = await invModel.addNewCar(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
+
+        console.log(`Data: ${req.body}`)
+        
+        if (Result) {
+            req.flash(
+                "notice",
+                `The car ${inv_model}, was added succesfully.`
+            )
+
+            res.status(201).render(
+                "inventory/manage", {
+                    title: "Management",
+                    nav,
+                }
+            )
+        } else {
+            req.flash("notice", "Sorry something happend.")
+            res.status(501).render("inventory/addCar", {
+                title: "Adding a New Car",
+                nav,
+            })
+        }
     } catch(error) {
         next(error)
     }

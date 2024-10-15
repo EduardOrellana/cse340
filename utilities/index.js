@@ -25,6 +25,17 @@ Util.getNav = async function (req, res, next) {
     return list
 }
 
+//Util to get the select option regarding the classifications
+Util.getClassificationNames = async (req, res, next) => {
+    let data = await invModel.getClassifications();
+    let _select;
+    data.rows.forEach((row) => {
+        _select += 
+            `<option value="${row.classification_id}">${row.classification_name}</option>`
+    })
+    return _select
+}
+
 /* **************************************
 * Build the classification view HTML
 * ************************************ */

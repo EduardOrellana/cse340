@@ -220,7 +220,7 @@ h1 {
 }
 
 /*Form Style*/
-.login, .register {
+.login, .register, .expand-data {
   width: 50%;
   margin: 0 auto;
   display: flex;
@@ -250,7 +250,11 @@ input {
 }
 
 .require::before {
-  content: "✴️";
+  content: "*";
+}
+
+.expand-data input {
+  width: 100%;
 }
 
 input:required:invalid, input:focus:invalid {
@@ -259,7 +263,7 @@ input:required:invalid, input:focus:invalid {
   background-repeat: no-repeat;
 }
 input:required:valid {
-  background-image: url(/images/site/valid.png);
+  background-color: #9bd2ad;
   background-position: right top;
   background-repeat: no-repeat;
 }
@@ -283,6 +287,8 @@ input:required:valid {
 #management-inv a:hover {
   background-color: var(--third_color);
 }
+
+
 
 /*Large Views*/
 @media screen and (min-width: 820px) {

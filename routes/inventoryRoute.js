@@ -19,17 +19,25 @@ router.get("/type/:classificationId", utility.handleErrors(invController.buildBy
 // Route to display vehicle details by car ID
 router.get("/detail/:car_Id", utility.handleErrors(invController.informationCarId))
 
-// Route to display the form to add a new car
-router.get("/addingCar", utility.handleErrors(invController.showAddCarForm))
-
 // Route to display the form to add a new classification
 router.get("/addingClassification", utility.handleErrors(invController.buildAddClassification))
 
+//Route to display the form to add a new Car
+router.get("/addingCar", utility.handleErrors(invController.buildAddCar))
+
+
 // Route to add a new Classification Car
 router.post("/addingClassification",
-    carValidation.registrationRules(),
+    carValidation.classificationRules(),
     carValidation.checkClassfication,
-    utility.handleErrors(invController.form_management)
+    utility.handleErrors(invController.addNewClassification)
+)
+
+//Route to add a new Car
+router.post("/addingCar",
+    carValidation.carsRules(),
+    carValidation.checkCars,
+    utility.handleErrors(invController.addNewCar)
 )
 
 module.exports = router

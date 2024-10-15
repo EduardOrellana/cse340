@@ -4,17 +4,17 @@
     res.redirect('/')
 } %>
 
-<!-- <% if (errors) { %>
+<% if (errors) { %>
     <ul class="notice">
 <% errors.array().forEach(error => { %>
     <li><%= error.msg %></li>
 <%  }) %>
 </ul>
-<% } %> -->
+<% } %>
 
 <div id="container-register-classification">
     <p>Provide the name of the new classification</p>
-    <form method="post" id="register-classification" action="/inv/addingClassification">
+    <form method="post" class="expand-data" action="/inv/addingClassification">
         <label class="require" for="classification_name">Classification Name: </label>
         <input
             type="text"
@@ -23,11 +23,11 @@
             required
             title="classification_name"
             placeholder="sport"
-            value="<%= locals.classification_name %>">
+            value="<%= locals.classification_name %>"/>
         <input
             type="submit"
             id="button-submit"
             name="submit"
-            value="Add Classification">
+            value="Add Classification"/>
     </form>
 </div>
