@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -30,7 +32,7 @@ Util.getClassificationNames = async (req, res, next) => {
     let data = await invModel.getClassifications();
     let _select;
     data.rows.forEach((row) => {
-        _select += 
+        _select +=
             `<option value="${row.classification_id}">${row.classification_name}</option>`
     })
     return _select
@@ -90,7 +92,7 @@ Image of the Vehicle from the Query from the Model.
 
 
 */
-Util.buildCarInformation = async function(data){
+Util.buildCarInformation = async function (data) {
     element = data[0];
     _price = new Intl.NumberFormat('en-US', {
         style: "currency",
@@ -109,34 +111,34 @@ Util.buildCarInformation = async function(data){
     }
     structure = '<div id="car-information">'
     //image section
-    structure += 
-                '<figure id="car-image">'
-                        + '<picture>'
-                            //+ '<source id="car-image-mobile" srcset="' + element.inv_image_mobile + '" media="(max-width: 819px)">' 
-                            + '<img src="' + element.inv_image_source + '" alt="' + element.inv_make +'"' + ' loading="lazy">'
-                        + '</picture>'
-                    + '<figcaption> ' + element.inv_year + ' - ' + element.inv_make + ' - ' + _price + '</figcaption>'
-                + '</figure>'
+    structure +=
+        '<figure id="car-image">'
+        + '<picture>'
+        //+ '<source id="car-image-mobile" srcset="' + element.inv_image_mobile + '" media="(max-width: 819px)">' 
+        + '<img src="' + element.inv_image_source + '" alt="' + element.inv_make + '"' + ' loading="lazy">'
+        + '</picture>'
+        + '<figcaption> ' + element.inv_year + ' - ' + element.inv_make + ' - ' + _price + '</figcaption>'
+        + '</figure>'
     //info section
     structure +=
-                '<section id="info">'
-                    //+ '<h2>' + element.inv_year + ' - ' + element.inv_make + ' - ' + _price + '</h2>'
-                    + '<h3>General Information: </h3>'
-                    + '<ul id="general-information-vehicle">'
-                        + '<li> Make: ' + element.inv_make + '</li>'
-                        + '<li> Model: ' + element.inv_model + '</li>'
-                        + '<li> Clasification: ' + element.classification_name + '</li>'
-                        + '<li> Year: ' + element.inv_year + '</li>'
-                        + '<li> Price: ' + _price + '</li>'
-                        + '<li> Miles: ' + _miles + '</li>'
-                        + '<li> Color: ' + element.inv_color + '</li>'
-                    + '</ul>'
-                    + '<br>'
-                    + '<h4>Description: </h4>'
-                    + '<p>' +element.inv_description+ '</p>'
-                + '</section>'
-                + '</div>'
-    
+        '<section id="info">'
+        //+ '<h2>' + element.inv_year + ' - ' + element.inv_make + ' - ' + _price + '</h2>'
+        + '<h3>General Information: </h3>'
+        + '<ul id="general-information-vehicle">'
+        + '<li> Make: ' + element.inv_make + '</li>'
+        + '<li> Model: ' + element.inv_model + '</li>'
+        + '<li> Clasification: ' + element.classification_name + '</li>'
+        + '<li> Year: ' + element.inv_year + '</li>'
+        + '<li> Price: ' + _price + '</li>'
+        + '<li> Miles: ' + _miles + '</li>'
+        + '<li> Color: ' + element.inv_color + '</li>'
+        + '</ul>'
+        + '<br>'
+        + '<h4>Description: </h4>'
+        + '<p>' + element.inv_description + '</p>'
+        + '</section>'
+        + '</div>'
+
     return structure
 }
 
@@ -145,8 +147,45 @@ Util.buildCarInformation = async function(data){
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
-Util.handleErrors = fn => (req, res, next) => 
+Util.handleErrors = fn => (req, res, next) =>
     Promise.resolve(fn(req, res, next))
-    .catch(next)
+        .catch(next)
+
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+    if (req.cookies.jwt) {
+        jwt.verify(
+            req.cookies.jwt,
+            process.env.ACCESS_TOKEN_SECRET,
+            function (err, accountData) {
+                if (err) {
+                    req.flash("Please log in")
+                    res.clearCookie("jwt")
+                    return res.redirect("/account/login")
+                }
+                res.locals.accountData = accountData
+                res.locals.loggedin = 1
+                next()
+            })
+    } else {
+        res.locals.loggedin = 0
+        next()
+    }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+    if (res.locals.loggedin) {
+        next()
+    } else {
+        req.flash("notice", "Please log in.")
+        return res.redirect("/account/login")
+    }
+}
 
 module.exports = Util

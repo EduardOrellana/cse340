@@ -18,6 +18,7 @@ const staticRoutes = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
 const loginRoute = require("./routes/accountRoute");
 const baseController = require("./controllers/baseController");
+const cookieParser = require("cookie-parser")
 
 /* ***********************
  * App Initialization
@@ -34,6 +35,9 @@ app.set("layout", "./layouts/layout");
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//Cookier Parseer
+app.use(cookieParser())
 
 // Session middleware
 app.use(session({

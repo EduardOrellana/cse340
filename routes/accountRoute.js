@@ -4,7 +4,9 @@ const utility = require("../utilities/index")
 const accountController = require("../controllers/accountController")
 const regValidate = require("../utilities/account-validation")
 
-router.get("/login", utility.handleErrors(accountController.buildLogin))
+router.get("/login", 
+    //utility.checkLogin, 
+    utility.handleErrors(accountController.buildLogin))    
 
 //route to register
 router.get("/register", utility.handleErrors(accountController.buildRegister))
@@ -15,9 +17,15 @@ router.post("/register",
     utility.handleErrors(accountController.registerAccount))
 
 router.post("/login",
-    (req, res) => {
-        res.status(200).send('login process')
-    }
+    regValidate.loginRules(),
+    //regValidate.checkLoginData,
+    utility.handleErrors(accountController.accountLogin)
+)
+
+router.get("/logged",
+    utility.checkJWTToken,
+    utility.checkLogin,
+    utility.handleErrors(accountController.buildManagement)
 )
 
 

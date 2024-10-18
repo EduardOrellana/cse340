@@ -17,7 +17,7 @@ registerAccount.register = async (account_firstname, account_lastname, account_e
 /* **********************
  *   Check for existing email
  * ********************* */
-registerAccount.checkExistingEmail = async (account_email) =>{
+registerAccount.checkExistingEmail = async (account_email) => {
     try {
         const sql = "SELECT * FROM account WHERE account_email = $1"
         const email = await pool.query(sql, [account_email])
@@ -27,14 +27,19 @@ registerAccount.checkExistingEmail = async (account_email) =>{
     }
 }
 
-// async function register(account_firstname, account_lastname, account_email, account_password){
-//     try {
-//         const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *"
-//         return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password])
-//     } catch (error) {
-//         return error.message
-//     }
-// }
+/* *****************************
+* Return account data using email address
+* ***************************** */
+registerAccount.getAccountByEmail = async (account_email) => {
+    try {
+        const result = await pool.query(
+            'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1',
+            [account_email])
+        return result.rows[0]
+    } catch (error) {
+        return new Error("No matching email found")
+    }
+}
 
 
 module.exports = registerAccount
