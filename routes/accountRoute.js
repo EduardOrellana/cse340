@@ -28,5 +28,10 @@ router.get("/logged",
     utility.handleErrors(accountController.buildManagement)
 )
 
+router.get("/account/:account_id",
+    utility.checkJWTToken,
+    utility.checkLogin,
+    utility.handleErrors(accountController.buildEditProfile)
+)
 
 module.exports = router;

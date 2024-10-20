@@ -18,6 +18,7 @@ const staticRoutes = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
 const loginRoute = require("./routes/accountRoute");
 const baseController = require("./controllers/baseController");
+const LogOutController = require("./controllers/logoutController")
 const cookieParser = require("cookie-parser")
 
 /* ***********************
@@ -65,6 +66,8 @@ app.use(staticRoutes);
 app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute);
 app.use("/account", loginRoute);
+
+app.post("/", utilities.handleErrors(LogOutController.deleteCookie));
 
 /* ***********************
  * File Not Found Route

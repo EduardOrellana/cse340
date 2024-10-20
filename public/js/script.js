@@ -1,3 +1,5 @@
+const { name } = require("ejs");
+
 const buttonPassword = document.getElementById("show-password")
 const passwordInput = document.getElementById('account_password')
 

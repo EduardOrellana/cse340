@@ -41,5 +41,17 @@ registerAccount.getAccountByEmail = async (account_email) => {
     }
 }
 
+registerAccount.getPasswordByUser = async (account_id) => {
+    try {
+        const result = await pool.query(
+            'SELECT account_password FROM account WHERE account_id = $1',
+            [account_id]
+        )
+        return result.rows[0]
+    } catch (error) {
+        return new Error("Error, please try again.")
+    }
+}
+
 
 module.exports = registerAccount

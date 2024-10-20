@@ -1,0 +1,70 @@
+<% if (title) { %>
+    <h1 id="login-head"><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<% if (errors) { %>
+    <ul class="notice">
+<% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+<%  }) %>
+</ul>
+<% } %>
+
+<div>
+    <p>Here you have your information</p>
+</div>
+<div id="register-form">
+
+    <form method="post" class="register" action="/account/logged">
+            <label class="require" for="account_firstname">First Name</label>
+            <input 
+                type="text"
+                name="account_firstname" 
+                id="account_firstname" 
+                required 
+                title="account_firstname"
+                placeholder=""
+                value="<%- user_name %>">
+
+            <label class="require" for="account_lastname">Last Name</label>
+            <input
+                type="text"
+                name="account_lastname"
+                id="account_lastname"
+                required
+                title="account_lastname"
+                value="<%- user_lname %>">
+            
+            <label class="require" for="account_email">Email</label>
+            <input
+                type="email"
+                id="account_email"
+                name="account_email"
+                required
+                title="account_email"
+                value="<%- user_email %>">
+            
+            <label class="require" for="account_password">Password</label>
+            <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
+            <input
+                type="password"
+                autocomplete="new-password"
+                id="account_password"
+                name="account_password"
+                title="account_password"
+                required
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                value="<%- user_password %>">
+
+            <input
+                type="submit"
+                id="button-submit"
+                name="submit"
+                value="Update">
+    </form>
+    <button id="show-password">Show Password</button>
+
+</div>
+<script src="js/script.js"></script>

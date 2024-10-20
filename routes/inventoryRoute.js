@@ -10,7 +10,12 @@ const carValidation = require("../utilities/car-validation")
  ************************/
 
 // Management View Route (Main Inventory Management Page)
-router.get("/", utility.handleErrors(invController.manage))
+router.get("/", utility.checkJWTToken, utility.checkLogin,utility.handleErrors(invController.manage))
+
+//Confirm Delete Item
+router.get("/delete/:car_Id", utility.checkJWTToken, utility.checkLogin, utility.handleErrors(invController.buildDeleteInv))
+
+router.post("/delete/:car_Id") 
 
 // Route to display vehicles by classification ID
 // ":classificationId" es un parámetro de ruta que captura el ID de clasificación desde la URL.
@@ -20,10 +25,10 @@ router.get("/type/:classificationId", utility.handleErrors(invController.buildBy
 router.get("/detail/:car_Id", utility.handleErrors(invController.informationCarId))
 
 // Route to display the form to add a new classification
-router.get("/addingClassification", utility.handleErrors(invController.buildAddClassification))
+router.get("/addingClassification", utility.checkJWTToken, utility.checkLogin, utility.handleErrors(invController.buildAddClassification))
 
 //Route to display the form to add a new Car
-router.get("/addingCar", utility.handleErrors(invController.buildAddCar))
+router.get("/addingCar", utility.checkJWTToken, utility.checkLogin, utility.handleErrors(invController.buildAddCar))
 
 
 // Route to add a new Classification Car

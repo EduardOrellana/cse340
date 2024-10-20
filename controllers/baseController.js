@@ -3,9 +3,10 @@ const baseController = {} //declaring the array of the data.
 
 baseController.buildHome = async function (req, res) {
     try {
-        const nav = await utilities.getNav() //building the navigation bar
+        const nav = await utilities.getNav()
+        const getMyAccountLink = await utilities.getMyAccountLink(req, res) 
         //req.flash("notice", "This is a flash message.")
-        res.render("index", { title: "Home", nav }) //rendering the index.html
+        res.render("index", { title: "Home", nav, getMyAccountLink}) //rendering the index.html
     }catch(error) {
         next(error)
     }

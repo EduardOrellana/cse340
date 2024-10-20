@@ -1,0 +1,109 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else { %>
+    res.redirect('/')
+<% } %>
+
+<% if (errors) { %>
+    <ul class="notice">
+<% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+<% }) %>
+    </ul>
+<% } %>
+
+<div id="container-register-car">
+    <h2>All fields are required!</h2>
+    <form method="post" class="expand-data" action="/inv">
+        
+        <label class="require" for="classification_id">Classification</label>
+        <select name="classification_id" id="classification_id">
+
+        <%- options %>
+
+        </select>
+
+        <label class="require" for="inv_make">Make</label>
+        <input
+            type="text"
+            name="inv_make"
+            id="inv_make"
+            required
+            title="Make"
+            placeholder="Chevy"/>
+
+        <label class="require" for="inv_model">Model</label>
+        <input
+            type="text"
+            name="inv_model"
+            id="inv_model"
+            required
+            title="Model"
+            placeholder="Camaro"/>
+
+        <label class="require" for="inv_year">Year</label>
+        <input
+            type="text"
+            name="inv_year"
+            id="inv_year"
+            required
+            title="Year"
+            placeholder="Just 4 digits"
+            pattern="\d{4}"/>
+
+        <label class="require" for="inv_description">Description</label>
+        <textarea required
+            name="inv_description" 
+            id="inv_description"
+            cols="3" 
+            rows="5"
+            role="textbox"></textarea>
+
+        <label class="require" for="inv_image">Image Path</label>
+        <input
+            type="text"
+            name="inv_image"
+            title="Image"
+            id="inv_image"
+            value="/images/vehicles/no-image.png"/>
+
+        <label class="require" for="inv_thumbnail">Image Path 2</label>
+        <input
+            type="text"
+            id="inv_thumbnail"
+            name="inv_thumbnail"
+            title="inv_thumbnail"
+            value="/images/vehicles/no-image.png"/>
+
+        <label class="require" for="inv_price">Price</label>
+        <span>Just Numbers</span>
+        <input
+            type="number"
+            name="inv_price"
+            id="inv_price"
+            title="Price"
+            required/>
+
+        <label class="require" for="inv_miles">Miles</label>
+        <input
+            type="number"
+            name="inv_miles"
+            id="inv_miles"
+            title="Miles"
+            required/>
+
+        <label class="require" for="inv_color">Color</label>
+        <input
+            type="text"
+            name="inv_color"
+            id="inv_color"
+            title="Color"
+            required/>
+
+        <input
+            type="submit"
+            id="button-submit"
+            name="submit"
+            value="Add the Car."/>
+    </form>
+</div>

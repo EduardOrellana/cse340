@@ -188,4 +188,19 @@ Util.checkLogin = (req, res, next) => {
     }
 }
 
+
+Util.getMyAccountLink = async (req, res, next) => {
+
+    if(req.cookies.jwt) {
+        return `<a id="myAcountLink" href="/account/logged">Management</a> 
+                <form action="/" method='POST'>
+                    <button type="submit"> 
+                        Log Out
+                    </button>
+                </form>`
+    } else {
+        return `<a id="myAcountLink-logout" href="/account/login">My Account</a>`
+    }
+}
+
 module.exports = Util
