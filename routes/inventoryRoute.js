@@ -45,4 +45,10 @@ router.post("/addingCar",
     utility.handleErrors(invController.addNewCar)
 )
 
+router.get("/edit_delete", 
+    utility.checkJWTToken,
+    utility.checkLogin,
+    utility.handleErrors(invController.buildGeneralInventory)
+)
+
 module.exports = router

@@ -71,6 +71,24 @@ Util.buildClassificationGrid = async function (data) {
     return grid
 }
 
+//Build a list of cars
+
+Util.buildListCars = async function(data) {
+
+    let _list = '<ul class="listCars">'
+
+    if (data.length > 0){
+        data.forEach(item => {
+            _list += `<li><a href="/inv/edit_delete/${item.inv_id}">${item.inv_model}</a></li>`
+        })
+    } else {
+        _list += "<ul><li>No items available</li></ul>"
+    }
+
+    _list += '</ul>'
+    return _list
+}
+
 //building the utility function to set the information for each car.
 
 /*

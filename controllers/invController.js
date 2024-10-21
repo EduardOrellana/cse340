@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
+const utilManage = require("../utilities/managementUtil")
 
 const invCont = {}
 
@@ -36,6 +37,47 @@ invCont.buildByClassificationId = async function (req, res, next) {
         });
     } catch (error) {
         next(error);
+    }
+};
+
+invCont.buildGeneralInventory = async (req, res, next) => {
+    try {
+
+        let nav = await utilities.getNav()
+        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+
+        let classificationsData = await invModel.getClassifications();
+
+        let sectionList = '<ul id="general-inventory">';
+
+        for (let i of classificationsData.rows){
+
+            sectionList += `<li class="items">${i.classification_name}</li>`
+
+            let data = await invModel.getInventoryByClassificationId(i.classification_id);
+
+            let carsList = await utilities.buildListCars(data)
+            
+            sectionList += carsList
+
+        }
+
+        sectionList += '</ul>'
+
+        console.log(sectionList)
+
+        if (!sectionList || sectionList.length) {
+            res.status(201).render("./inventory/edit_deleteSection", {
+                title: "Edit or Delete Items",
+                nav,
+                getMyAccountLink,
+                list: sectionList
+            })
+        }
+
+
+    } catch (error) {
+        next(error)
     }
 };
 
@@ -199,14 +241,6 @@ invCont.addNewCar = async (req, res, next) => {
     }
 }
 
-invCont.buildDeleteInv = async (req, res, next) => {
-    try {
-        let nav = await utilities.getNav()
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
-    } catch(error) {
-        next(error)
-    }
-}
 
 invCont.deleteInv = async (req, res, next) => {
     try {
