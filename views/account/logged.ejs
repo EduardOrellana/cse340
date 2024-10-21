@@ -8,4 +8,14 @@
 
 <h2>Welcome to your account <%- user %> </h2>
 
-<%-linkToEdit%>
+<%#-linkToEdit%>
+<div id="display-links">
+<a href="/account/updateInfo">Update General Info</a>
+<a href="/account/update/password">Update Password</a>
+
+
+<% if (status == "Admin") { %>
+    <a href="/inv">Update Inventory</a>
+<% } %>
+
+</div>

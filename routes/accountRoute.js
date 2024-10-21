@@ -28,10 +28,28 @@ router.get("/logged",
     utility.handleErrors(accountController.buildManagement)
 )
 
-router.get("/account/:account_id",
+router.get("/updateInfo",
     utility.checkJWTToken,
     utility.checkLogin,
     utility.handleErrors(accountController.buildEditProfile)
+)
+
+router.post("/updateInfo", 
+    utility.checkJWTToken,
+    utility.checkLogin,
+    utility.handleErrors(accountController.editProfile)
+)
+
+router.get("/update/password",
+    utility.checkJWTToken,
+    utility.checkLogin,
+    utility.handleErrors(accountController.buildEditPassword)
+)
+
+router.post("/update/password",
+    utility.checkJWTToken,
+    utility.checkLogin,
+    utility.handleErrors(accountController.updatePassword)
 )
 
 module.exports = router;

@@ -288,7 +288,19 @@ input:required:valid {
   background-color: var(--third_color);
 }
 
+#display-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
+#display-links a {
+  background-color: var(--third_color);
+  margin: 0 auto;
+  padding: 1rem;
+  border: 2px solid var(--second_color);
+  border-radius: 15px;
+}
 
 /*Large Views*/
 @media screen and (min-width: 820px) {

@@ -15,9 +15,10 @@
 <div>
     <p>Here you have your information</p>
 </div>
-<div id="register-form">
 
-    <form method="post" class="register" action="/account/logged">
+<div id="register-forms">
+
+    <form method="post" class="register" action="/account/updateInfo">
             <label class="require" for="account_firstname">First Name</label>
             <input 
                 type="text"
@@ -45,26 +46,13 @@
                 required
                 title="account_email"
                 value="<%- user_email %>">
-            
-            <label class="require" for="account_password">Password</label>
-            <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
-            <input
-                type="password"
-                autocomplete="new-password"
-                id="account_password"
-                name="account_password"
-                title="account_password"
-                required
-                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
-                value="<%- user_password %>">
 
             <input
-                type="submit"
-                id="button-submit"
-                name="submit"
-                value="Update">
+            type="submit"
+            id="button-submit"
+            name="submit"
+            value="Update General Info">
+
     </form>
-    <button id="show-password">Show Password</button>
 
 </div>
-<script src="js/script.js"></script>

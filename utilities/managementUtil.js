@@ -6,7 +6,7 @@ adminUtil.editProfile = (id) => {
 
     let id_profile = id
 
-    let link = `<a href="/account/${id_profile}">Edit Personal Information</a>`
+    let link = `<a href="/account/updateInfo">Edit Personal Information</a>`
 
     return link
 }
