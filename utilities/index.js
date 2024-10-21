@@ -210,7 +210,14 @@ Util.checkLogin = (req, res, next) => {
 Util.getMyAccountLink = async (req, res, next) => {
 
     if(req.cookies.jwt) {
-        return `<a id="myAcountLink" href="/account/logged">Management</a> 
+
+        let _status = "Welcome Basic"
+
+        if(res.locals.accountData.account_type == "Admin") {
+            _status = "Welcome Happy"
+        }
+
+        return `<a id="myAcountLink" href="/account/logged">${_status}</a> 
                 <form action="/" method='POST'>
                     <button type="submit"> 
                         Log Out

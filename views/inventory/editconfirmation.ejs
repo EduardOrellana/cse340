@@ -4,24 +4,18 @@
     res.redirect('/')
 <% } %>
 
-<% if (errors) { %>
-    <ul class="notice">
-<% errors.array().forEach(error => { %>
-    <li><%= error.msg %></li>
-<% }) %>
-    </ul>
-<% } %>
-
 <div id="container-register-car">
-    <h2>All fields are required!</h2>
-    <form method="post" class="expand-data" action="/inv">
+    <h2>Details</h2>
+    <form method="post" class="expand-data" action="/edit_delete">
         
-        <label class="require" for="classification_id">Classification</label>
+        <!-- <label class="require" for="classification_id">Classification</label>
         <select name="classification_id" id="classification_id">
 
-        <%- options %>
+        <%#- options %>
 
-        </select>
+        </select> -->
+
+        <img src="<%- inv_image %>" alt="imagepath" loading="lazy">
 
         <label class="require" for="inv_make">Make</label>
         <input
@@ -30,7 +24,8 @@
             id="inv_make"
             required
             title="Make"
-            placeholder="Chevy"/>
+            placeholder="Chevy"
+            value="<%- inv_make %>"/>
 
         <label class="require" for="inv_model">Model</label>
         <input
@@ -39,7 +34,8 @@
             id="inv_model"
             required
             title="Model"
-            placeholder="Camaro"/>
+            placeholder="Camaro"
+            value="<%- inv_model %>"/>
 
         <label class="require" for="inv_year">Year</label>
         <input
@@ -49,7 +45,8 @@
             required
             title="Year"
             placeholder="Just 4 digits"
-            pattern="\d{4}"/>
+            pattern="\d{4}"
+            value="<%- inv_year %>"/>
 
         <label class="require" for="inv_description">Description</label>
         <textarea required
@@ -57,9 +54,9 @@
             id="inv_description"
             cols="3" 
             rows="5"
-            role="textbox"></textarea>
+            role="textbox"> <%- inv_description %></textarea>
 
-        <label class="require" for="inv_image">Image Path</label>
+        <!-- <label class="require" for="inv_image">Image Path</label>
         <input
             type="text"
             name="inv_image"
@@ -73,7 +70,7 @@
             id="inv_thumbnail"
             name="inv_thumbnail"
             title="inv_thumbnail"
-            value="/images/vehicles/no-image.png"/>
+            value="/images/vehicles/no-image.png"/> -->
 
         <label class="require" for="inv_price">Price</label>
         <span>Just Numbers</span>
@@ -82,7 +79,8 @@
             name="inv_price"
             id="inv_price"
             title="Price"
-            required/>
+            required
+            value="<%- inv_price %>"/>
 
         <label class="require" for="inv_miles">Miles</label>
         <input
@@ -90,7 +88,8 @@
             name="inv_miles"
             id="inv_miles"
             title="Miles"
-            required/>
+            required
+            value="<%- inv_miles %>"/>
 
         <label class="require" for="inv_color">Color</label>
         <input
@@ -98,12 +97,20 @@
             name="inv_color"
             id="inv_color"
             title="Color"
-            required/>
+            required
+            value="<%- inv_color %>"/>
+            
+        <label class="require" for="deleteOrupdate">Update or Delete?</label>
+        <select name="deleteOrupdate" id="deleteOrupdate">
+            <option value=""></option>
+            <option value="1">Update</option>
+            <option value="2">Delete</option>
+        </select>
 
         <input
             type="submit"
             id="button-submit"
             name="submit"
-            value="Add the Car."/>
+            value="Confirm"/>
     </form>
 </div>

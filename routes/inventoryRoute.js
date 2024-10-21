@@ -12,11 +12,6 @@ const carValidation = require("../utilities/car-validation")
 // Management View Route (Main Inventory Management Page)
 router.get("/", utility.checkJWTToken, utility.checkLogin,utility.handleErrors(invController.manage))
 
-//Confirm Delete Item
-router.get("/delete/:car_Id", utility.checkJWTToken, utility.checkLogin, utility.handleErrors(invController.buildDeleteInv))
-
-router.post("/delete/:car_Id") 
-
 // Route to display vehicles by classification ID
 // ":classificationId" es un parámetro de ruta que captura el ID de clasificación desde la URL.
 router.get("/type/:classificationId", utility.handleErrors(invController.buildByClassificationId))
@@ -50,5 +45,16 @@ router.get("/edit_delete",
     utility.checkLogin,
     utility.handleErrors(invController.buildGeneralInventory)
 )
+
+//Confirm Delete or edit Item
+router.get("/edit_delete/:item_id", 
+    utility.checkJWTToken, 
+    utility.checkLogin, 
+    utility.handleErrors(invController.buildDeleteEditInv))
+
+router.post("/edit_delete/:item_id", 
+    utility.checkJWTToken, 
+    utility.checkLogin, 
+    utility.handleErrors(invController.confirmEditDeleteItem))
 
 module.exports = router
