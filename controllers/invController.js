@@ -324,17 +324,17 @@ invCont.confirmEditItem = async (req, res, next) => {
         //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
         let {inv_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color} = req.body
 
-            const queryUpdate = await invModel.updateItem(inv_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color)
+        const queryUpdate = await invModel.updateItem(inv_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color)
 
-            console.log(queryUpdate)
+        console.log(queryUpdate)
 
-            if (queryUpdate) {
-                req.flash("notice", "The process ran successfully");
-                res.status(201).redirect("/inv")
-            } else {
-                req.flash("notice", "Sorry, the deleted failed.");
-                res.status(501).redirect("/inv");
-            }
+        if (queryUpdate) {
+            req.flash("notice", "The process ran successfully");
+            res.status(201).redirect("/inv/")
+        } else {
+            req.flash("notice", "Sorry, the deleted failed.");
+            res.status(501).redirect("/inv/");
+        }
 
     } catch (error) {
         next(error)
@@ -356,20 +356,17 @@ invCont.confirmDeleteItem = async (req, res, next) => {
 
             if (queryDelete) {
                 //req.flash("notice", "The process ran successfully");
-                res.status(201).render("inventory/manage", {
-                    title: "Management",
-                    nav,
-                    errors: null
-                })
+                res.status(201).redirect("/inv/")
+    
             } else {
                 req.flash("notice", "Sorry, the deleted failed.");
-                res.status(501).redirect("/inv");
+                res.status(501).redirect("/inv/");
             }
 
     } catch (error) {
         next(error)
     }
-}
 
+}
 
 module.exports = invCont
