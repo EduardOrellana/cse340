@@ -12,12 +12,12 @@ require("dotenv").config()
 async function buildLogin(req, res, next) {
     try {
         let nav = await utility.getNav();
-        let getMyAccountLink = await utility.getMyAccountLink(req, res);
+        //let getMyAccountLink = await utility.getMyAccountLink(req, res);
         //req.flash("notice", "this is an example")
         res.render("account/login", {
             title: "Login",
             nav,
-            getMyAccountLink,
+            //getMyAccountLink,
             errors: null
         })
     } catch (error) {
@@ -28,12 +28,12 @@ async function buildLogin(req, res, next) {
 async function buildRegister(req, res, next) {
     try {
         let nav = await utility.getNav();
-        let getMyAccountLink = await utility.getMyAccountLink(req, res);
+        //let getMyAccountLink = await utility.getMyAccountLink(req, res);
         //req.flash("notice", "placeholder")
         res.render("account/register", {
             title: "Register",
             nav,
-            getMyAccountLink,
+            //getMyAccountLink,
             errors: null
         })
     } catch (error) {
@@ -44,7 +44,7 @@ async function buildRegister(req, res, next) {
 async function registerAccount(req, res, next) {
     try {
         let nav = await utility.getNav();
-        let getMyAccountLink = await utility.getMyAccountLink(req, res);
+        //let getMyAccountLink = await utility.getMyAccountLink(req, res);
         const { account_firstname, account_lastname, account_email, account_password } = req.body
 
         // Hash the password before storing
@@ -57,7 +57,7 @@ async function registerAccount(req, res, next) {
             res.status(500).render("account/register", {
                 title: "Registration",
                 nav,
-                getMyAccountLink,
+                //getMyAccountLink,
                 errors: null,
             })
         }
@@ -101,7 +101,7 @@ async function registerAccount(req, res, next) {
 
     async function accountLogin(req, res) {
         let nav = await utility.getNav();
-        let getMyAccountLink = await utility.getMyAccountLink(req, res);
+        //let getMyAccountLink = await utility.getMyAccountLink(req, res);
         const { account_email, account_password } = req.body
         const accountData = await accountModel.getAccountByEmail(account_email)
         if (!accountData) {
@@ -109,7 +109,7 @@ async function registerAccount(req, res, next) {
             res.status(400).render("account/login", {
                 title: "Login",
                 nav,
-                getMyAccountLink,
+                //getMyAccountLink,
                 errors: null,
                 account_email,
             })
@@ -142,12 +142,12 @@ async function buildManagement(req, res, next) {
 
     //let linkProfile = utilityManagement.editProfile(user_id)
     let nav = await utility.getNav()
-    let getMyAccountLink = await utility.getMyAccountLink(req, res);
+    //let getMyAccountLink = await utility.getMyAccountLink(req, res);
 
     res.render("account/logged", {
         title: "Management User",
         nav,
-        getMyAccountLink,
+        //getMyAccountLink,
         user,
         status
         //linkToEdit: linkProfile
@@ -157,7 +157,7 @@ async function buildManagement(req, res, next) {
 async function buildEditProfile(req, res, next) {
 
     let nav = await utility.getNav();
-    let getMyAccountLink = await utility.getMyAccountLink(req, res);
+    //let getMyAccountLink = await utility.getMyAccountLink(req, res);
     let info = await accountModel.getAccountByEmail(res.locals.accountData.account_email)
 
     let user_name = info.account_firstname
@@ -170,7 +170,7 @@ async function buildEditProfile(req, res, next) {
     res.render("account/profile", {
         title: "Updating your information",
         nav,
-        getMyAccountLink,
+        //getMyAccountLink,
         user_name,
         user_lname,
         user_email,
@@ -180,9 +180,9 @@ async function buildEditProfile(req, res, next) {
 
 async function editProfile(req, res, next) {
 
-    let account_id = res.locals.accountData.account_id; // Corregido el nombre de la variable
+    let account_id = res.locals.accountData.account_id; 
 
-    let { account_firstname, account_lastname, account_email, account_password } = req.body;
+    let { account_firstname, account_lastname, account_email} = req.body;
 
 
     try {
@@ -213,13 +213,13 @@ async function editProfile(req, res, next) {
 async function buildEditPassword(req, res, next) {
 
     let nav = await utility.getNav();
-    let getMyAccountLink = await utility.getMyAccountLink(req, res);
+    //let getMyAccountLink = await utility.getMyAccountLink(req, res);
     let info = await accountModel.getAccountByEmail(res.locals.accountData.account_email)
 
     res.render("account/newPassword", {
         title: "Updating your information",
         nav,
-        getMyAccountLink,
+        //getMyAccountLink,
         errors: null
     })
 }

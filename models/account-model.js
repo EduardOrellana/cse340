@@ -1,3 +1,4 @@
+
 const { check } = require("express-validator")
 const pool = require("../database/index")
 const registerAccount = {}
@@ -53,11 +54,11 @@ registerAccount.getPasswordByUser = async (account_id) => {
     }
 }
 
-registerAccount.updatePersonalInformation = async ( account_id, account_firstname, account_lastname, account_email, account_password) => {
+registerAccount.updatePersonalInformation = async ( account_id, account_firstname, account_lastname, account_email) => {
     try {
-        const sql = "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3, account_password = $5 WHERE account_id = $4 RETURNING *"
+        const sql = "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *"
 
-        const _result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id, account_password])
+        const _result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id])
 
         console.log(`RESULT: ${JSON.stringify(_result)}`)
 

@@ -14,7 +14,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 
         // Obtener nav y el enlace de cuenta antes de verificar los datos
         let nav = await utilities.getNav();
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res);
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res);
 
         // Verificar si no hay datos
         if (!data || data.length === 0) {
@@ -32,7 +32,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
         res.render("./inventory/classification", {
             title: className + " vehicles",
             nav,
-            getMyAccountLink,
+            //getMyAccountLink,
             grid,
         });
     } catch (error) {
@@ -44,7 +44,7 @@ invCont.buildGeneralInventory = async (req, res, next) => {
     try {
 
         let nav = await utilities.getNav()
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
 
         let classificationsData = await invModel.getClassifications();
 
@@ -70,7 +70,7 @@ invCont.buildGeneralInventory = async (req, res, next) => {
             res.status(201).render("./inventory/edit_deleteSection", {
                 title: "Edit or Delete Items",
                 nav,
-                getMyAccountLink,
+                //getMyAccountLink,
                 list: sectionList
             })
         }
@@ -97,7 +97,7 @@ invCont.informationCarId = async function (req, res, next) {
 
         let nav = await utilities.getNav();
 
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res);
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res);
 
         const car_name = 'Vehicle: ' + data[0].inv_make;
         //debugin
@@ -106,7 +106,7 @@ invCont.informationCarId = async function (req, res, next) {
         res.render("./inventory/inv-info", {
             title: car_name,
             nav,
-            getMyAccountLink,
+            //getMyAccountLink,
             info_car,
         })
     } catch (error) {
@@ -123,26 +123,32 @@ invCont.informationCarId = async function (req, res, next) {
 invCont.manage = async function (req, res, next) {
     try {
         let nav = await utilities.getNav();
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res);
-        res.render("./inventory/manage", {
-            title: "Management",
-            nav,
-            getMyAccountLink,
-            errors: null
-        })
-    } catch (error) {
+
+        if (res.locals.accountData.account_type == "Admin"){
+            res.render("./inventory/manage", {
+                title: "Management",
+                nav,
+                //getMyAccountLink,
+                errors: null
+            })
+        }else {
+            res.redirect("/")
+            }
+        }
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res);
+
+    catch (error) {
         next(error)
-    }
-}
+    }}
 
 invCont.buildAddClassification = async function (req, res, next) {
     try {
         let nav = await utilities.getNav();
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
         res.render("inventory/addClassification", {
             title: "Adding a New Classication",
             nav,
-            getMyAccountLink,
+            //getMyAccountLink,
             errors: null
         })
     } catch (error) {
@@ -153,12 +159,12 @@ invCont.buildAddClassification = async function (req, res, next) {
 invCont.buildAddCar = async (req, res, next) => {
     try {
         let nav = await utilities.getNav();
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
         let options = await utilities.getClassificationNames();
         res.render("inventory/addCar", {
             title: "Adding A New Car",
             nav,
-            getMyAccountLink,
+            //getMyAccountLink,
             options,
             errors: null
         })
@@ -170,7 +176,7 @@ invCont.buildAddCar = async (req, res, next) => {
 invCont.addNewClassification = async (req, res, next) => {
     try {
         let nav = await utilities.getNav();
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
 
         const { classification_name } = req.body;
 
@@ -182,20 +188,16 @@ invCont.addNewClassification = async (req, res, next) => {
                 `The classification ${classification_name}, was register succesfully.`
             )
 
-            res.status(201).render(
-                "inventory/manage", {
-                title: "Manage System",
-                nav,
-                getMyAccountLink
-            }
-            )
+            res.status(201).redirect("/")
+            
         } else {
 
             req.flash("notice", "Sorry the process failed")
             res.status(501).render("inventory/addClassification", {
                 title: "Adding Classification",
                 nav,
-                getMyAccountLink,
+                //getMyAccountLink,
+                errors: null
             }
 
             )
@@ -210,7 +212,7 @@ invCont.addNewClassification = async (req, res, next) => {
 invCont.addNewCar = async (req, res, next) => {
     try {
         let nav = await utilities.getNav();
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
         const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
         const Result = await invModel.addNewCar(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
 
@@ -226,7 +228,8 @@ invCont.addNewCar = async (req, res, next) => {
                 "inventory/manage", {
                 title: "Management",
                 nav,
-                getMyAccountLink
+                //getMyAccountLink
+                errors: null
             }
             )
         } else {
@@ -242,13 +245,13 @@ invCont.addNewCar = async (req, res, next) => {
 }
 
 
-invCont.buildDeleteEditInv = async (req, res, next) => {
+invCont.buildEditInv = async (req, res, next) => {
     try {
 
         let inv_id = req.params.item_id
 
         let nav = await utilities.getNav()
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
 
         //let options = await utilities.getClassificationNames()
 
@@ -264,10 +267,10 @@ invCont.buildDeleteEditInv = async (req, res, next) => {
         let inv_image = data[0].inv_image_source
 
 
-        res.status(201).render("inventory/editconfirmation", {
-            title: "Edit or Delete Item",
+        res.status(200).render("inventory/editconfirmation", {
+            title: "Edit Item",
             nav,
-            getMyAccountLink,
+            //getMyAccountLink,
             inv_make,
             inv_model,
             inv_year,
@@ -275,6 +278,38 @@ invCont.buildDeleteEditInv = async (req, res, next) => {
             inv_miles,
             inv_color,
             inv_description,
+            inv_image,
+            inv_id
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+invCont.buildDeleteInv = async (req, res, next) => {
+    try {
+
+        let inv_id = req.params.item_id
+
+        let nav = await utilities.getNav()
+
+        let data = await invModel.getCarrById(inv_id)
+
+        let inv_make = data[0].inv_make
+        let inv_model = data[0].inv_model
+        let inv_year = data[0].inv_year
+        let inv_image = data[0].inv_image_source
+
+
+        res.status(200).render("inventory/deleteconfirmation", {
+            title: "Delete Item",
+            nav,
+            //getMyAccountLink,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_id,
             inv_image
         })
 
@@ -283,47 +318,58 @@ invCont.buildDeleteEditInv = async (req, res, next) => {
     }
 }
 
-invCont.confirmEditDeleteItem = async (req, res, next) => {
+invCont.confirmEditItem = async (req, res, next) => {
     try {
-        let nav = await utilities.getNav()
-        let getMyAccountLink = await utilities.getMyAccountLink(req, res)
-        let { deleteOrupdate } = req.body
-        let inv_id = req.params.item_id
+        //let nav = await utilities.getNav()
+        //let getMyAccountLink = await utilities.getMyAccountLink(req, res)
+        let {inv_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color} = req.body
 
-        if (deleteOrupdate == "2") {
+            const queryUpdate = await invModel.updateItem(inv_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color)
+
+            console.log(queryUpdate)
+
+            if (queryUpdate) {
+                req.flash("notice", "The process ran successfully");
+                res.status(201).redirect("/inv")
+            } else {
+                req.flash("notice", "Sorry, the deleted failed.");
+                res.status(501).redirect("/inv");
+            }
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+invCont.confirmDeleteItem = async (req, res, next) => {
+    try {
+
+        console.log("DELETE ITEM!!!!!!!!!!!!")
+
+        let nav = await utilities.getNav()
+
+        let {inv_id} = req.body
 
             const queryDelete = await invModel.deleteItem(inv_id)
 
             console.log(queryDelete)
 
             if (queryDelete) {
-                req.flash("notice", "The process ran successfully");
-                res.status(201).redirect("logged")
+                //req.flash("notice", "The process ran successfully");
+                res.status(201).render("inventory/manage", {
+                    title: "Management",
+                    nav,
+                    errors: null
+                })
             } else {
-                req.flash("notice", "Sorry, the updating failed.");
-                res.status(501).redirect("logged");
+                req.flash("notice", "Sorry, the deleted failed.");
+                res.status(501).redirect("/inv");
             }
 
-        } else {
-
-            let { inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color } = req.body
-
-            const _query = await invModel.updateItem(inv_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color);
-
-            console.log(_query)
-
-            if (_query) {
-                req.flash("notice", "The process ran successfully");
-                res.status(201).redirect("logged")
-            } else {
-                req.flash("notice", "Sorry, the updating failed.");
-                res.status(501).redirect("logged");
-            }
-
-        }
     } catch (error) {
         next(error)
     }
 }
+
 
 module.exports = invCont

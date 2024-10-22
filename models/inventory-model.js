@@ -1,4 +1,4 @@
-  const pool = require("../database/") //when we have just one index level doesn't care if we write it or not.
+const pool = require("../database/") //when we have just one index level doesn't care if we write it or not.
 //exporting from the database folder the query when we are going to retrieve the data.
 /* ***************************
  *  Get all classification data
@@ -92,7 +92,7 @@ async function updateItem(inv_id, inv_make, inv_model, inv_year, inv_description
 
     const sql = "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_price = $5, inv_miles = $6, inv_color = $7 WHERE inv_id = $8 RETURNING *"
 
-    const result = await pool(sql, [inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, inv_id])
+    const result = await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, inv_id])
 
     return result.rows[0]
 
@@ -105,9 +105,9 @@ async function updateItem(inv_id, inv_make, inv_model, inv_year, inv_description
 async function deleteItem(inv_id) {
   try {
 
-    const sql = "DELETE FROM public.inventory WHERE inv_id = $1"
+    const sql = "DELETE FROM public.inventory WHERE inv_id = $1 RETURNING *"
 
-    const result = await pool(sql, [inv_id])
+    const result = await pool.query(sql, [inv_id])
 
     return result.rows[0]
 

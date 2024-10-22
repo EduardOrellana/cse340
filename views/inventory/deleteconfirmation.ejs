@@ -6,7 +6,7 @@
 
 <div id="container-register-car">
     <h2>Details</h2>
-    <form method="post" class="expand-data" action="/edit">
+    <form method="post" class="expand-data" action="/delete">
         
         <!-- <label class="require" for="classification_id">Classification</label>
         <select name="classification_id" id="classification_id">
@@ -20,7 +20,7 @@
         <input
             type="hidden"
             name="inv_id"
-            value="<%- inv_id %>">
+            value="<%- inv_id %>"
 
         <label class="require" for="inv_make">Make</label>
         <input
@@ -53,13 +53,13 @@
             pattern="\d{4}"
             value="<%- inv_year %>"/>
 
-        <label class="require" for="inv_description">Description</label>
+        <!-- <label class="require" for="inv_description">Description</label>
         <textarea required
             name="inv_description" 
             id="inv_description"
             cols="3" 
             rows="5"
-            role="textbox"> <%- inv_description %></textarea>
+            role="textbox"> <%#- inv_description %></textarea> -->
 
         <!-- <label class="require" for="inv_image">Image Path</label>
         <input
@@ -77,14 +77,15 @@
             title="inv_thumbnail"
             value="/images/vehicles/no-image.png"/> -->
 
-        <label class="require" for="inv_price">Price <span>"Just Numbers"</span></label>
+        <!-- <label class="require" for="inv_price">Price</label>
+        <span>Just Numbers</span>
         <input
             type="number"
             name="inv_price"
             id="inv_price"
             title="Price"
             required
-            value="<%- inv_price %>"/>
+            value="<%#- inv_price %>"/>
 
         <label class="require" for="inv_miles">Miles</label>
         <input
@@ -93,7 +94,7 @@
             id="inv_miles"
             title="Miles"
             required
-            value="<%- inv_miles %>"/>
+            value="<%#- inv_miles %>"/>
 
         <label class="require" for="inv_color">Color</label>
         <input
@@ -102,7 +103,7 @@
             id="inv_color"
             title="Color"
             required
-            value="<%- inv_color %>"/>
+            value="<%#- inv_color %>"/> -->
             
         <!-- <label class="require" for="deleteOrupdate">Update or Delete?</label>
         <select name="deleteOrupdate" id="deleteOrupdate">
@@ -115,6 +116,6 @@
             type="submit"
             id="button-submit"
             name="submit"
-            value="Update"/>
+            value="Delete"/>
     </form>
 </div>

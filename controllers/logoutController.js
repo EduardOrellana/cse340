@@ -7,13 +7,13 @@ LogOut.deleteCookie = async (req, res, next) => {
         res.clearCookie(cookieName, { path: '/' }); 
 
         let nav = await util.getNav()
-        let myAcountLink = await util.getMyAccountLink(req, res)
+        //let getMyAccountLink = await util.getMyAccountLink(req, res)
 
 
         res.status(200).render("index", {
             title: "Home",
             nav,
-            getMyAccountLink: '<a id="myAcountLink-logout" href="/account/login">My Account</a>'
+            //getMyAccountLink
         })
     } catch (error) {
         next(error) 

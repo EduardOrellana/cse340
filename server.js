@@ -1,3 +1,4 @@
+
 /* ******************************************
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
@@ -39,6 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Cookier Parseer
 app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 // Session middleware
 app.use(session({
