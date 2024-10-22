@@ -52,13 +52,15 @@ invCont.buildGeneralInventory = async (req, res, next) => {
 
         for (let i of classificationsData.rows) {
 
-            sectionList += `<li class="items">${i.classification_name}</li>`
+            sectionList += `<li class="items">${i.classification_name}`
 
             let data = await invModel.getInventoryByClassificationId(i.classification_id);
 
             let carsList = await utilities.buildListCars(data)
 
             sectionList += carsList
+
+            sectionList += `</li>`
 
         }
 

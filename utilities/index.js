@@ -79,7 +79,7 @@ Util.buildListCars = async function(data) {
 
     if (data.length > 0){
         data.forEach(item => {
-            _list += `<li><span>${item.inv_model}</span> <a href="/inv/edit/${item.inv_id}">Edit</a> <a href="/inv/delete/${item.inv_id}">Delete</a></li>`
+            _list += `<li><span>${item.inv_model} |</span> <a href="/inv/edit/${item.inv_id}">Edit</a> <span>|</span> <a href="/inv/delete/${item.inv_id}">Delete</a></li>`
         })
     } else {
         _list += "<ul><li>No items available</li></ul>"

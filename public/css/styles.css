@@ -302,6 +302,20 @@ input:required:valid {
   border-radius: 15px;
 }
 
+/*Edit or Delete, Section*/
+#general-inventory {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.listCars a {
+  color: var(--third_color);
+}
+
+.listCars, #general-inventory {
+  list-style: none;
+}
+
 /*Large Views*/
 @media screen and (min-width: 820px) {
 
