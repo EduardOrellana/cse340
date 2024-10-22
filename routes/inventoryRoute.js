@@ -64,7 +64,6 @@ router.post("/edit",
     utility.handleErrors(invController.confirmEditItem))
 
 router.post("/delete", 
-    
     utility.handleErrors(invController.confirmDeleteItem))
 
 module.exports = router
