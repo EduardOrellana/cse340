@@ -14,10 +14,10 @@ async function getCart(account_id) {
 
 async function getItemCart(inv_id, account_id) {
     try{
-        const data = await pool.query('SELECT * FROM public.cart WHERE inv_id = $1 AND account_type = $2', [inv_id, account_id])
+        const data = await pool.query('SELECT * FROM public.cart WHERE inv_id = $1 AND account_id = $2', [inv_id, account_id])
         return data.rows[0]
     }catch(error) {
-        console.erro("error with getting the item."), error;
+        console.error("error with getting the item."), error;
         throw new Error("Someting is running wrong, pleasy try again.")
     }
 }
@@ -44,7 +44,7 @@ async function addToCart(inv_id, account_id) {
 
 async function deleteItemFromCart(inv_id, account_id) {
     try{
-        const _query = await pool.query("DELETE FROM public.cart WHERE inv_id = $1 AND account_type = $2 RETURNING *", [inv_id, account_id])
+        const _query = await pool.query("DELETE FROM public.cart WHERE inv_id = $1 AND account_id = $2 RETURNING *", [inv_id, account_id])
         return _query.rows[0]
     } catch(error) {
         console.error("error with getting the cart."), error;
