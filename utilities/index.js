@@ -1,4 +1,5 @@
-const invModel = require("../models/inventory-model")
+const invModel = require("../models/inventory-model");
+const cartModel = require("../models/cart-model");
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -226,6 +227,70 @@ Util.getMyAccountLink = async (req, res, next) => {
     } else {
         return `<a id="myAcountLink-logout" href="/account/login">My Account</a>`
     }
+}
+
+
+/*Enhacement adding the cart Util*/
+
+Util.getCart = async (req, res, next) => {
+    let data = await cartModel.getCart()
+    let _html = "<div id='cart-container'>";
+    let _price = 0;
+
+    if (data.rowCount > 0) {
+        _html += `
+            <table>
+                <caption> Cart Inventory </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Car</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Details</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>`
+        data.rows.forEach((row) => {
+            _html += 
+                `<tr>
+                    <th scope="row">${row.inv_id}</th>
+                    <td>${row.inv_make} ${row.inv_model}</td>
+                    <td>${row.inv_year}</td>
+                    <td>${new Intl.NumberFormat('en-US', {style: "currency", currency : "USD"}).format(row.inv_price)}</td>
+                    <td><a href="/inv/detail/${row.inv_id}">Click to go details section</a></td>
+                    <td>delete car</td>
+                </tr>
+                `
+            _price += parseFloat(row.inv_price)
+        })
+
+        let _displayPrice = new Intl.NumberFormat('en-US', {
+            style: "currency",
+            currency: "USD"
+        }).format(_price);
+
+        _html += '</tbody'
+        _html += `
+            <tfoot>
+                <tr>
+                    <th scope="row" colspan="2"> Total Items</th>
+                    <td>${data.rowCount}</td>
+                    <th scope="row" colspan="2">Total Price</th>
+                    <td>${_displayPrice}</td>
+                </tr>
+            </tfoot>
+        `
+        _html += `</table>
+                </div>
+        `
+        return _html
+    } else {
+        _html = '<h2>You have not added a car.</h2>'
+        return _html
+    }
+
 }
 
 module.exports = Util

@@ -17,6 +17,7 @@ const pool = require('./database/');
 const utilities = require("./utilities/index");
 const staticRoutes = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
+const cartRoute = require("./routes/cartRoute");
 const loginRoute = require("./routes/accountRoute");
 const baseController = require("./controllers/baseController");
 const LogOutController = require("./controllers/logoutController")
@@ -68,6 +69,7 @@ app.use(staticRoutes);
 app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute);
 app.use("/account", loginRoute);
+app.use("/cart", cartRoute);
 
 app.post("/", utilities.handleErrors(LogOutController.deleteCookie));
 

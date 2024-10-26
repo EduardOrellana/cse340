@@ -8,3 +8,11 @@ else { res.redirect('/') } %>
 <%# messages() %>
 
 <%- info_car %>
+
+<% if (locals.loggedin) { %>
+    <form action="/" method="POST">
+        <button class="general-button" type="submit">
+            Add to Cart
+        </button>
+    </form>
+<%} %>
