@@ -4,6 +4,8 @@ const utility = require("../utilities/index")
 const cartController = require("../controllers/cartController")
 
 router.get("/",
+    utility.checkJWTToken,
+    utility.checkLogin,
     utility.handleErrors(cartController.buildCart)
 )
 

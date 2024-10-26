@@ -1,9 +1,9 @@
 const pool = require("../database/index")
 
 
-async function getCart() {
+async function getCart(account_id) {
     try{
-        const _table = await pool.query("SELECT * FROM public.cart")
+        const _table = await pool.query("SELECT * FROM public.cart WHERE account_id = $1", [account_id])
         return _table
     } catch(error) {
         console.error("error with getting the cart."), error;
@@ -12,9 +12,9 @@ async function getCart() {
 
 }
 
-async function getItemCart(inv_id) {
+async function getItemCart(inv_id, account_id) {
     try{
-        const data = await pool.query('SELECT * FROM public.cart WHERE inv_id = $1', [inv_id])
+        const data = await pool.query('SELECT * FROM public.cart WHERE inv_id = $1 AND account_type = $2', [inv_id, account_id])
         return data.rows[0]
     }catch(error) {
         console.erro("error with getting the item."), error;
@@ -22,9 +22,9 @@ async function getItemCart(inv_id) {
     }
 }
 
-async function clearCart() {
+async function clearCart(account_id) {
     try{
-        const _query = await pool.query("TRUNCATE TABLE public.cart")
+        const _query = await pool.query("DELETE FROM public.cart WHERE account_id = $1 RETURNING *", [account_id])
         return _query.rows[0]
     } catch(error) {
         console.error("error with getting the cart."), error;
@@ -32,9 +32,9 @@ async function clearCart() {
     }
 }
 
-async function addToCart(inv_id) {
+async function addToCart(inv_id, account_id) {
     try{
-        const _query = await pool.query("INSERT INTO public.cart SELECT * FROM public.inventory WHERE inv_id = $1 RETURNING *", [inv_id])
+        const _query = await pool.query("INSERT INTO public.cart SELECT *, $2 FROM public.inventory WHERE inv_id = $1 RETURNING *", [inv_id, account_id])
         return _query.rows[0]
     } catch(error) {
         console.error("error with getting the cart."), error;
@@ -42,9 +42,9 @@ async function addToCart(inv_id) {
     }
 }
 
-async function deleteItemFromCart(inv_id) {
+async function deleteItemFromCart(inv_id, account_id) {
     try{
-        const _query = await pool.query("DELETE FROM public.cart WHERE inv_id = $1 RETURNING *", [inv_id])
+        const _query = await pool.query("DELETE FROM public.cart WHERE inv_id = $1 AND account_type = $2 RETURNING *", [inv_id, account_id])
         return _query.rows[0]
     } catch(error) {
         console.error("error with getting the cart."), error;

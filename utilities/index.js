@@ -233,7 +233,7 @@ Util.getMyAccountLink = async (req, res, next) => {
 /*Enhacement adding the cart Util*/
 
 Util.getCart = async (req, res, next) => {
-    let data = await cartModel.getCart()
+    let data = await cartModel.getCart(res.locals.accountData.account_id)
     let _html = "<div id='cart-container'>";
     let _price = 0;
 
@@ -248,7 +248,7 @@ Util.getCart = async (req, res, next) => {
                         <th scope="col">Year</th>
                         <th scope="col">Price</th>
                         <th scope="col">Details</th>
-                        <th></th>
+                        <th scope="col">Delete Button</th>
                     </tr>
                 </thead>
                 <tbody>`
@@ -271,7 +271,7 @@ Util.getCart = async (req, res, next) => {
             currency: "USD"
         }).format(_price);
 
-        _html += '</tbody'
+        _html += '</tbody>'
         _html += `
             <tfoot>
                 <tr>
@@ -283,8 +283,7 @@ Util.getCart = async (req, res, next) => {
             </tfoot>
         `
         _html += `</table>
-                </div>
-        `
+                </div>`
         return _html
     } else {
         _html = '<h2>You have not added a car.</h2>'

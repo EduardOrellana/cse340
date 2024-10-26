@@ -8,7 +8,9 @@ const cartController = {}
  */
 cartController.buildCart = async (req, res, next) =>{
     try {
-        const cart = await util.getCart();
+        const cart = await util.getCart(req, res, next);
+        //console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT')
+        //console.log(cart)
         const nav = await util.getNav();
 
         res.status(201).render("./cart/my_cart", {
@@ -24,7 +26,7 @@ cartController.buildCart = async (req, res, next) =>{
 cartController.cleanCart = async (req, res, next) => {
     try {
 
-        let query = await cartModel.clearCart();
+        let query = await cartModel.clearCart(res.locals.accountData.account_id);
 
         if (query) {
             req.flash("notice", "the inventory was truncated")
@@ -42,7 +44,7 @@ cartController.buildDeleteItem = async (req, res, next) => {
     try {
         let nav = await util.getNav()
         let invId = req.params.inv_id
-        let data = await cartModel.getItemCart(invId)
+        let data = await cartModel.getItemCart(invId, res.locals.accountData.account_id)
 
 
 
@@ -63,7 +65,7 @@ cartController.buildDeleteItem = async (req, res, next) => {
 cartController.confirmDeleteItem = async (req, res, next) => {
     try {
         let {inv_id} = req.body
-        let query = await cartModel.deleteItemFromCart(inv_id)
+        let query = await cartModel.deleteItemFromCart(inv_id, res.locals.accountData.account_id)
 
         if (query) {
             req.flash("notice", "One Item was deleted");

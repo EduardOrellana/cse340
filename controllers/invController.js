@@ -378,7 +378,7 @@ invCont.addToCart = async (req, res, next) => {
         let nav = await utilities.getNav()
         let car_id = req.params.car_id
         
-        let query = await cartModel.addToCart(car_id)
+        let query = await cartModel.addToCart(car_id, res.locals.accountData.account_id)
 
         if (query) {
             let car_inventory = await cartModel.getCart();
