@@ -6,10 +6,8 @@
 
         <% if (locals.loggedin) { %>
             <a href="/account/logged">Welcome <%- locals.accountData.account_firstname %> </a>
-            <form action="/" method='POST'>
-                <button type="submit"> 
-                    Log Out
-                </button>
+            <form action="/" method='post'>
+                <input type="submit" name="logOut" value="Log Out"> 
             </form>
         <% } else { %>
             <a title="Click To Login" href="/account/login">My Account</a>

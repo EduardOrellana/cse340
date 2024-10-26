@@ -260,7 +260,7 @@ Util.getCart = async (req, res, next) => {
                     <td>${row.inv_year}</td>
                     <td>${new Intl.NumberFormat('en-US', {style: "currency", currency : "USD"}).format(row.inv_price)}</td>
                     <td><a href="/inv/detail/${row.inv_id}">Click to go details section</a></td>
-                    <td>delete car</td>
+                    <td><a href="/cart/deleteItem/${row.inv_id}">Delete Item</a></td>
                 </tr>
                 `
             _price += parseFloat(row.inv_price)

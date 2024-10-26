@@ -8,8 +8,15 @@ router.get("/",
 )
 
 router.post("/",
-    
+    utility.handleErrors(cartController.cleanCart)
 )
 
+router.get("/deleteItem/:inv_id",
+    utility.handleErrors(cartController.buildDeleteItem)
+)
+
+router.post("/deleteItem/:inv_id",
+    utility.handleErrors(cartController.confirmDeleteItem)
+)
 
 module.exports = router

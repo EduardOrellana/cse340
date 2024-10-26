@@ -1,0 +1,44 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } 
+else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<div id="container-delete-item-cart">
+    <h2>Confirm you delete action.</h2>
+    <form method="post" class="expand-data">
+        <img src="<%- inv_image %>" alt="imagepath" loading="lazy" width="300" height="300">
+
+        <input
+            type="hidden"
+            name="inv_id"
+            value="<%- inv_id %>">
+        
+        <label class="require" for="inv_make">Make</label>
+        <input
+            type="text"
+            name="inv_make"
+            id="inv_make"
+            required
+            title="Make"
+            value=" <%- inv_make %>">
+        
+        <label class="require" for="inv_model">Model</label>
+        <input
+            type="text"
+            name="inv_make"
+            id="inv_make"
+            required
+            title="Make"
+            value=" <%- inv_model %>">
+
+        <input
+            type="submit"
+            id="button-submit"
+            name="submit"
+            value="Confirm Delete">
+    </form>
+</div>

@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const cartModel = require("../models/cart-model")
 const utilities = require("../utilities/")
 const utilManage = require("../utilities/managementUtil")
 
@@ -352,23 +353,47 @@ invCont.confirmDeleteItem = async (req, res, next) => {
 
         let {inv_id} = req.body
 
-            const queryDelete = await invModel.deleteItem(inv_id)
+        const queryDelete = await invModel.deleteItem(inv_id)
 
-            console.log(queryDelete)
+        console.log(queryDelete)
 
-            if (queryDelete) {
-                //req.flash("notice", "The process ran successfully");
-                res.status(201).redirect("/inv/")
-    
-            } else {
-                req.flash("notice", "Sorry, the deleted failed.");
-                res.status(501).redirect("/inv/");
-            }
+        if (queryDelete) {
+            //req.flash("notice", "The process ran successfully");
+            res.status(201).redirect("/inv/")
+
+        } else {
+            req.flash("notice", "Sorry, the deleted failed.");
+            res.status(501).redirect("/inv/");
+        }
 
     } catch (error) {
         next(error)
     }
 
+}
+
+invCont.addToCart = async (req, res, next) => {
+    try {
+
+        let nav = await utilities.getNav()
+        let car_id = req.params.car_id
+        
+        let query = await cartModel.addToCart(car_id)
+
+        if (query) {
+            let car_inventory = await cartModel.getCart();
+
+            req.flash("notice", "One item was added into your Cart.");
+            res.status(201).redirect(`/inv/detail/${car_id}`)
+        }
+        else {
+            req.flash("notice", "Sorry, the adding failed");
+            res.status(501).redirect("/");
+        }
+
+    } catch(error) {
+        next(error)
+    }
 }
 
 module.exports = invCont

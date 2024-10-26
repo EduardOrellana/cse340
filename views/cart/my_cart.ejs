@@ -5,7 +5,15 @@
 <% } 
 else { res.redirect('/') } %>
 
-<%# messages() %>
+<%- messages() %>
 
 <%- cart %>
-<button type="button">Clean Inventory</button>
+<hr>
+<form method="post">
+    <input 
+        type="submit"
+        class="general-button"
+        id="cleanCart"
+        name="submit"
+        value="Clean Cart"/>
+</form>

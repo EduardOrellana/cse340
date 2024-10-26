@@ -66,4 +66,10 @@ router.post("/edit",
 router.post("/delete", 
     utility.handleErrors(invController.confirmDeleteItem))
 
+router.post("/detail/:car_id", 
+    utility.checkJWTToken,
+    utility.checkLogin,
+    utility.handleErrors(invController.addToCart)
+)
+
 module.exports = router
